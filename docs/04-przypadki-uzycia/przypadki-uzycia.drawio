@@ -1,0 +1,47 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Przypadki użycia" id="d1">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1250" pageHeight="930" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="SYS" value="Helpdesk Akademika" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=left;spacingLeft=8;fontStyle=1;fillColor=none;" vertex="1" parent="1"><mxGeometry x="290" y="130" width="720" height="790" as="geometry" /></mxCell>
+        <mxCell id="M" value="Mieszkaniec" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="110" y="480" width="30" height="60" as="geometry" /></mxCell>
+        <mxCell id="LLM" value="Usługa LLM&lt;br&gt;(zewnętrzna)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" vertex="1" parent="1"><mxGeometry x="705" y="20" width="30" height="60" as="geometry" /></mxCell>
+        <mxCell id="REC" value="Recepcja" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="1140" y="265" width="30" height="60" as="geometry" /></mxCell>
+        <mxCell id="KON" value="Konserwator" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="1140" y="502" width="30" height="60" as="geometry" /></mxCell>
+        <mxCell id="KIE" value="Kierownik" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" vertex="1" parent="1"><mxGeometry x="1140" y="740" width="30" height="60" as="geometry" /></mxCell>
+        <mxCell id="U1" value="Zadaj pytanie&lt;br&gt;asystentowi" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="340" y="180" width="200" height="60" as="geometry" /></mxCell>
+        <mxCell id="U2" value="Zgłoś usterkę" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="340" y="300" width="200" height="60" as="geometry" /></mxCell>
+        <mxCell id="U3" value="Zgłoś awarię&lt;br&gt;krytyczną" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="340" y="420" width="200" height="60" as="geometry" /></mxCell>
+        <mxCell id="U4" value="Sprawdź status&lt;br&gt;zgłoszenia" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="340" y="540" width="200" height="60" as="geometry" /></mxCell>
+        <mxCell id="U5" value="Potwierdź naprawę" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="340" y="660" width="200" height="60" as="geometry" /></mxCell>
+        <mxCell id="U6" value="Oceń obsługę" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="340" y="780" width="200" height="60" as="geometry" /></mxCell>
+        <mxCell id="R1" value="Odbierz alarm&lt;br&gt;o awarii" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="750" y="170" width="220" height="60" as="geometry" /></mxCell>
+        <mxCell id="R2" value="Zweryfikuj zgłoszenie" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="750" y="265" width="220" height="60" as="geometry" /></mxCell>
+        <mxCell id="R3" value="Przydziel konserwatora" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="750" y="360" width="220" height="60" as="geometry" /></mxCell>
+        <mxCell id="K1" value="Przeglądaj&lt;br&gt;przydzielone zadania" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="750" y="455" width="220" height="60" as="geometry" /></mxCell>
+        <mxCell id="K2" value="Zgłoś wykonanie&lt;br&gt;naprawy" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="750" y="550" width="220" height="60" as="geometry" /></mxCell>
+        <mxCell id="D1" value="Obsłuż eskalację&lt;br&gt;(przekroczony termin)" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="750" y="645" width="220" height="60" as="geometry" /></mxCell>
+        <mxCell id="D2" value="Zarządzaj bazą&lt;br&gt;wiedzy asystenta" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="750" y="740" width="220" height="60" as="geometry" /></mxCell>
+        <mxCell id="D3" value="Przeglądaj statystyki" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1"><mxGeometry x="750" y="835" width="220" height="60" as="geometry" /></mxCell>
+        <mxCell id="NOTE" value="Asystent AI jest częścią systemu,&lt;br&gt;dlatego nie ma go jako aktora.&lt;br&gt;Logowanie przez SSO uczelni jest&lt;br&gt;warunkiem wstępnym każdego&lt;br&gt;przypadku, więc go nie rysujemy." style="shape=note;whiteSpace=wrap;html=1;size=12;align=left;spacingLeft=6;" vertex="1" parent="1"><mxGeometry x="20" y="760" width="250" height="95" as="geometry" /></mxCell>
+        <mxCell id="e_M_U1" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="M" target="U1"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_M_U2" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="M" target="U2"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_M_U4" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="M" target="U4"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_M_U5" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="M" target="U5"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_L_U1" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="LLM" target="U1"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_L_U2" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="LLM" target="U2"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_R_R1" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="REC" target="R1"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_R_R2" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="REC" target="R2"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_R_R3" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="REC" target="R3"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_K_K1" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="KON" target="K1"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_K_K2" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="KON" target="K2"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_D_D1" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="KIE" target="D1"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_D_D2" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="KIE" target="D2"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="e_D_D3" value="" style="endArrow=none;html=1;edgeStyle=none;" edge="1" parent="1" source="KIE" target="D3"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="x1" value="«extend»" style="endArrow=open;dashed=1;html=1;endSize=10;edgeStyle=none;" edge="1" parent="1" source="U3" target="U2"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+        <mxCell id="x2" value="«extend»" style="endArrow=open;dashed=1;html=1;endSize=10;edgeStyle=none;" edge="1" parent="1" source="U6" target="U5"><mxGeometry relative="1" as="geometry"></mxGeometry></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
