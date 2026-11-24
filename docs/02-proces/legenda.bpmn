@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Defs_Legenda" targetNamespace="http://helpdesk-akademik/bpmn" exporter="helpdesk-akademik" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_Legenda">
+    <bpmn:participant id="Pool_Legenda" name="Pula = proces" processRef="Proc_Legenda" />
+  </bpmn:collaboration>
+  <bpmn:process id="Proc_Legenda" name="Legenda" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_L">
+      <bpmn:lane id="Lane_L" name="Tor = aktor">
+        <bpmn:flowNodeRef>L_Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>L_End</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>L_User</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>L_Service</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>L_Send</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>L_Gw</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>L_Task</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>L_Timer</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>L_A</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>L_B</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="L_Start" name="Zdarzenie początkowe" />
+    <bpmn:endEvent id="L_End" name="Zdarzenie końcowe" />
+    <bpmn:userTask id="L_User" name="Zadanie użytkownika (człowiek)" />
+    <bpmn:serviceTask id="L_Service" name="Zadanie automatyczne (system, bot AI)" />
+    <bpmn:sendTask id="L_Send" name="Wysłanie komunikatu lub alarmu" />
+    <bpmn:exclusiveGateway id="L_Gw" name="Bramka XOR: decyzja lub scalenie" />
+    <bpmn:task id="L_Task" name="Zadanie z terminem" />
+    <bpmn:boundaryEvent id="L_Timer" name="Zdarzenie czasowe = wyjątek (przekroczony termin)" attachedToRef="L_Task">
+      <bpmn:timerEventDefinition id="L_TimerDef" />
+    </bpmn:boundaryEvent>
+    <bpmn:task id="L_A" name="Krok A">
+      <bpmn:outgoing>L_Flow</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:task id="L_B" name="Krok B">
+      <bpmn:incoming>L_Flow</bpmn:incoming>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="L_Flow" name="przepływ (warunek)" sourceRef="L_A" targetRef="L_B" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_L">
+    <bpmndi:BPMNPlane id="Plane_L" bpmnElement="Collab_Legenda">
+      <bpmndi:BPMNShape id="Pool_Legenda_di" bpmnElement="Pool_Legenda" isHorizontal="true"><dc:Bounds x="0" y="0" width="1330" height="190" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_L_di" bpmnElement="Lane_L" isHorizontal="true"><dc:Bounds x="30" y="0" width="1300" height="190" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Start_di" bpmnElement="L_Start"><dc:Bounds x="92" y="62" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="70" y="105" width="80" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_End_di" bpmnElement="L_End"><dc:Bounds x="192" y="62" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="170" y="105" width="80" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_User_di" bpmnElement="L_User"><dc:Bounds x="270" y="40" width="110" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Service_di" bpmnElement="L_Service"><dc:Bounds x="400" y="40" width="110" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Send_di" bpmnElement="L_Send"><dc:Bounds x="530" y="40" width="110" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Gw_di" bpmnElement="L_Gw" isMarkerVisible="true"><dc:Bounds x="680" y="55" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="650" y="112" width="110" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Task_di" bpmnElement="L_Task"><dc:Bounds x="790" y="40" width="110" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_Timer_di" bpmnElement="L_Timer"><dc:Bounds x="827" y="102" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="790" y="142" width="130" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_A_di" bpmnElement="L_A"><dc:Bounds x="960" y="50" width="80" height="60" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="L_B_di" bpmnElement="L_B"><dc:Bounds x="1200" y="50" width="80" height="60" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="L_Flow_di" bpmnElement="L_Flow"><di:waypoint x="1040" y="80" /><di:waypoint x="1200" y="80" /><bpmndi:BPMNLabel><dc:Bounds x="1065" y="58" width="110" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

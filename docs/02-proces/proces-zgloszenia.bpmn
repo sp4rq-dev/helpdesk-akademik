@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Defs_Helpdesk" targetNamespace="http://helpdesk-akademik/bpmn" exporter="helpdesk-akademik" exporterVersion="1.0">
+  <bpmn:collaboration id="Collab_Helpdesk">
+    <bpmn:participant id="Pool_Helpdesk" name="Helpdesk Akademika – obsługa sprawy mieszkańca" processRef="Proc_Zgloszenie" />
+  </bpmn:collaboration>
+  <bpmn:process id="Proc_Zgloszenie" name="Obsługa sprawy mieszkańca" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_1">
+      <bpmn:lane id="Lane_M" name="Mieszkaniec">
+        <bpmn:flowNodeRef>S1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>M1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>M2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_M1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>E1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>M3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_M2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>M4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>E2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_B" name="Asystent AI (bot)">
+        <bpmn:flowNodeRef>B1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_B1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>B2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>B4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>J0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>B3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_R" name="Recepcja">
+        <bpmn:flowNodeRef>R0</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>R1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_R1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>R2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>E3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>J1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>R3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_K" name="Konserwator">
+        <bpmn:flowNodeRef>J2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>K1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>K2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T1</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_D" name="Kierownik akademika">
+        <bpmn:flowNodeRef>D1</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="S1" name="Wystąpił problem lub pytanie">
+      <bpmn:outgoing>F01</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="M1" name="Opisz sprawę w czacie (tekst, zdjęcie)">
+      <bpmn:incoming>F01</bpmn:incoming>
+      <bpmn:outgoing>F02</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="M2" name="Zapoznaj się z odpowiedzią">
+      <bpmn:incoming>F07</bpmn:incoming>
+      <bpmn:outgoing>F08</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="G_M1" name="Sprawa rozwiązana?">
+      <bpmn:incoming>F08</bpmn:incoming>
+      <bpmn:outgoing>F09</bpmn:outgoing>
+      <bpmn:outgoing>F10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:endEvent id="E1" name="Sprawa zamknięta bez zgłoszenia">
+      <bpmn:incoming>F09</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="M3" name="Sprawdź wykonaną naprawę">
+      <bpmn:incoming>F23</bpmn:incoming>
+      <bpmn:outgoing>F24</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="G_M2" name="Naprawa skuteczna?">
+      <bpmn:incoming>F24</bpmn:incoming>
+      <bpmn:outgoing>F25</bpmn:outgoing>
+      <bpmn:outgoing>F27</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="M4" name="Oceń obsługę (1–5)">
+      <bpmn:incoming>F25</bpmn:incoming>
+      <bpmn:outgoing>F26</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="E2" name="Zgłoszenie zamknięte">
+      <bpmn:incoming>F26</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="B1" name="Sklasyfikuj sprawę (LLM)">
+      <bpmn:documentation>Model językowy rozpoznaje intencję: pytanie informacyjne, usterka albo awaria krytyczna (zalanie, brak prądu, gaz).</bpmn:documentation>
+      <bpmn:incoming>F02</bpmn:incoming>
+      <bpmn:outgoing>F03</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="G_B1" name="Rodzaj sprawy?">
+      <bpmn:incoming>F03</bpmn:incoming>
+      <bpmn:outgoing>F04</bpmn:outgoing>
+      <bpmn:outgoing>F05</bpmn:outgoing>
+      <bpmn:outgoing>F06</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="B2" name="Odpowiedz na podstawie regulaminu i FAQ (RAG)">
+      <bpmn:documentation>Odpowiedź generowana wyłącznie na podstawie dokumentów akademika, ze wskazaniem źródła.</bpmn:documentation>
+      <bpmn:incoming>F04</bpmn:incoming>
+      <bpmn:outgoing>F07</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sendTask id="B4" name="Wyślij alarm do recepcji + instrukcję dla mieszkańca">
+      <bpmn:incoming>F06</bpmn:incoming>
+      <bpmn:outgoing>F13</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:exclusiveGateway id="J0">
+      <bpmn:incoming>F05</bpmn:incoming>
+      <bpmn:incoming>F10</bpmn:incoming>
+      <bpmn:outgoing>F11</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="B3" name="Utwórz zgłoszenie (kategoria, priorytet)">
+      <bpmn:incoming>F11</bpmn:incoming>
+      <bpmn:outgoing>F12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="R0" name="Podejmij interwencję doraźną">
+      <bpmn:incoming>F13</bpmn:incoming>
+      <bpmn:outgoing>F18</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="R1" name="Zweryfikuj zgłoszenie">
+      <bpmn:incoming>F12</bpmn:incoming>
+      <bpmn:outgoing>F14</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="G_R1" name="Zgłoszenie zasadne?">
+      <bpmn:incoming>F14</bpmn:incoming>
+      <bpmn:outgoing>F15</bpmn:outgoing>
+      <bpmn:outgoing>F16</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sendTask id="R2" name="Odrzuć i poinformuj mieszkańca">
+      <bpmn:incoming>F16</bpmn:incoming>
+      <bpmn:outgoing>F17</bpmn:outgoing>
+    </bpmn:sendTask>
+    <bpmn:endEvent id="E3" name="Zgłoszenie odrzucone">
+      <bpmn:incoming>F17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="J1">
+      <bpmn:incoming>F15</bpmn:incoming>
+      <bpmn:incoming>F18</bpmn:incoming>
+      <bpmn:outgoing>F19</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="R3" name="Przydziel konserwatora i termin (SLA)">
+      <bpmn:incoming>F19</bpmn:incoming>
+      <bpmn:outgoing>F20</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="J2">
+      <bpmn:incoming>F20</bpmn:incoming>
+      <bpmn:incoming>F27</bpmn:incoming>
+      <bpmn:incoming>F29</bpmn:incoming>
+      <bpmn:outgoing>F21</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="K1" name="Wykonaj naprawę">
+      <bpmn:incoming>F21</bpmn:incoming>
+      <bpmn:outgoing>F22</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="K2" name="Zgłoś zakończenie prac">
+      <bpmn:incoming>F22</bpmn:incoming>
+      <bpmn:outgoing>F23</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="D1" name="Eskaluj: zmień wykonawcę lub priorytet">
+      <bpmn:incoming>F28</bpmn:incoming>
+      <bpmn:outgoing>F29</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="T1" name="Przekroczony termin SLA" attachedToRef="K1">
+      <bpmn:documentation>Wyjątek: termin realizacji minął przed zgłoszeniem zakończenia prac. Przerywa zadanie i eskaluje sprawę do kierownika.</bpmn:documentation>
+      <bpmn:outgoing>F28</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerDef_SLA" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="F01" sourceRef="S1" targetRef="M1" />
+    <bpmn:sequenceFlow id="F02" sourceRef="M1" targetRef="B1" />
+    <bpmn:sequenceFlow id="F03" sourceRef="B1" targetRef="G_B1" />
+    <bpmn:sequenceFlow id="F04" name="pytanie informacyjne" sourceRef="G_B1" targetRef="B2" />
+    <bpmn:sequenceFlow id="F05" name="usterka" sourceRef="G_B1" targetRef="J0" />
+    <bpmn:sequenceFlow id="F06" name="awaria krytyczna" sourceRef="G_B1" targetRef="B4" />
+    <bpmn:sequenceFlow id="F07" sourceRef="B2" targetRef="M2" />
+    <bpmn:sequenceFlow id="F08" sourceRef="M2" targetRef="G_M1" />
+    <bpmn:sequenceFlow id="F09" name="tak" sourceRef="G_M1" targetRef="E1" />
+    <bpmn:sequenceFlow id="F10" name="nie" sourceRef="G_M1" targetRef="J0" />
+    <bpmn:sequenceFlow id="F11" sourceRef="J0" targetRef="B3" />
+    <bpmn:sequenceFlow id="F12" sourceRef="B3" targetRef="R1" />
+    <bpmn:sequenceFlow id="F13" sourceRef="B4" targetRef="R0" />
+    <bpmn:sequenceFlow id="F14" sourceRef="R1" targetRef="G_R1" />
+    <bpmn:sequenceFlow id="F15" name="tak" sourceRef="G_R1" targetRef="J1" />
+    <bpmn:sequenceFlow id="F16" name="nie" sourceRef="G_R1" targetRef="R2" />
+    <bpmn:sequenceFlow id="F17" sourceRef="R2" targetRef="E3" />
+    <bpmn:sequenceFlow id="F18" sourceRef="R0" targetRef="J1" />
+    <bpmn:sequenceFlow id="F19" sourceRef="J1" targetRef="R3" />
+    <bpmn:sequenceFlow id="F20" sourceRef="R3" targetRef="J2" />
+    <bpmn:sequenceFlow id="F21" sourceRef="J2" targetRef="K1" />
+    <bpmn:sequenceFlow id="F22" sourceRef="K1" targetRef="K2" />
+    <bpmn:sequenceFlow id="F23" sourceRef="K2" targetRef="M3" />
+    <bpmn:sequenceFlow id="F24" sourceRef="M3" targetRef="G_M2" />
+    <bpmn:sequenceFlow id="F25" name="tak" sourceRef="G_M2" targetRef="M4" />
+    <bpmn:sequenceFlow id="F26" sourceRef="M4" targetRef="E2" />
+    <bpmn:sequenceFlow id="F27" name="nie" sourceRef="G_M2" targetRef="J2" />
+    <bpmn:sequenceFlow id="F28" sourceRef="T1" targetRef="D1" />
+    <bpmn:sequenceFlow id="F29" sourceRef="D1" targetRef="J2" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_1">
+    <bpmndi:BPMNPlane id="Plane_1" bpmnElement="Collab_Helpdesk">
+      <bpmndi:BPMNShape id="Pool_Helpdesk_di" bpmnElement="Pool_Helpdesk" isHorizontal="true"><dc:Bounds x="0" y="0" width="3355" height="1150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_M_di" bpmnElement="Lane_M" isHorizontal="true"><dc:Bounds x="30" y="0" width="3325" height="170" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_B_di" bpmnElement="Lane_B" isHorizontal="true"><dc:Bounds x="30" y="170" width="3325" height="330" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_R_di" bpmnElement="Lane_R" isHorizontal="true"><dc:Bounds x="30" y="500" width="3325" height="330" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_K_di" bpmnElement="Lane_K" isHorizontal="true"><dc:Bounds x="30" y="830" width="3325" height="170" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_D_di" bpmnElement="Lane_D" isHorizontal="true"><dc:Bounds x="30" y="1000" width="3325" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S1_di" bpmnElement="S1"><dc:Bounds x="122" y="82" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="M1_di" bpmnElement="M1"><dc:Bounds x="240" y="60" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="M2_di" bpmnElement="M2"><dc:Bounds x="900" y="60" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_M1_di" bpmnElement="G_M1" isMarkerVisible="true"><dc:Bounds x="1105" y="75" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="1095" y="42" width="70" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="E1_di" bpmnElement="E1"><dc:Bounds x="1277" y="82" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="M3_di" bpmnElement="M3"><dc:Bounds x="2715" y="60" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_M2_di" bpmnElement="G_M2" isMarkerVisible="true"><dc:Bounds x="2920" y="75" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="2973" y="42" width="70" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="M4_di" bpmnElement="M4"><dc:Bounds x="3045" y="60" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="E2_di" bpmnElement="E2"><dc:Bounds x="3257" y="82" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="B1_di" bpmnElement="B1"><dc:Bounds x="405" y="295" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_B1_di" bpmnElement="G_B1" isMarkerVisible="true"><dc:Bounds x="610" y="310" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="663" y="283" width="70" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="B2_di" bpmnElement="B2"><dc:Bounds x="735" y="185" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="B4_di" bpmnElement="B4"><dc:Bounds x="735" y="405" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="J0_di" bpmnElement="J0" isMarkerVisible="true"><dc:Bounds x="1270" y="310" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="B3_di" bpmnElement="B3"><dc:Bounds x="1395" y="295" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R0_di" bpmnElement="R0"><dc:Bounds x="900" y="735" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R1_di" bpmnElement="R1"><dc:Bounds x="1560" y="625" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_R1_di" bpmnElement="G_R1" isMarkerVisible="true"><dc:Bounds x="1765" y="640" width="50" height="50" /><bpmndi:BPMNLabel><dc:Bounds x="1755" y="695" width="70" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R2_di" bpmnElement="R2"><dc:Bounds x="1890" y="515" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="E3_di" bpmnElement="E3"><dc:Bounds x="2102" y="537" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="J1_di" bpmnElement="J1" isMarkerVisible="true"><dc:Bounds x="1930" y="640" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="R3_di" bpmnElement="R3"><dc:Bounds x="2055" y="625" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="J2_di" bpmnElement="J2" isMarkerVisible="true"><dc:Bounds x="2260" y="905" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="K1_di" bpmnElement="K1"><dc:Bounds x="2385" y="890" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="K2_di" bpmnElement="K2"><dc:Bounds x="2550" y="890" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="D1_di" bpmnElement="D1"><dc:Bounds x="2385" y="1035" width="130" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T1_di" bpmnElement="T1"><dc:Bounds x="2432" y="952" width="36" height="36" /><bpmndi:BPMNLabel><dc:Bounds x="2472" y="990" width="90" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="F01_di" bpmnElement="F01"><di:waypoint x="158" y="100" /><di:waypoint x="240" y="100" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F02_di" bpmnElement="F02"><di:waypoint x="370" y="100" /><di:waypoint x="470" y="100" /><di:waypoint x="470" y="295" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F03_di" bpmnElement="F03"><di:waypoint x="535" y="335" /><di:waypoint x="610" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F04_di" bpmnElement="F04"><di:waypoint x="635" y="310" /><di:waypoint x="635" y="225" /><di:waypoint x="735" y="225" /><bpmndi:BPMNLabel><dc:Bounds x="643" y="191" width="75" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F05_di" bpmnElement="F05"><di:waypoint x="660" y="335" /><di:waypoint x="1270" y="335" /><bpmndi:BPMNLabel><dc:Bounds x="945" y="315" width="50" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F06_di" bpmnElement="F06"><di:waypoint x="635" y="360" /><di:waypoint x="635" y="445" /><di:waypoint x="735" y="445" /><bpmndi:BPMNLabel><dc:Bounds x="643" y="451" width="75" height="27" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F07_di" bpmnElement="F07"><di:waypoint x="865" y="225" /><di:waypoint x="965" y="225" /><di:waypoint x="965" y="140" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F08_di" bpmnElement="F08"><di:waypoint x="1030" y="100" /><di:waypoint x="1105" y="100" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F09_di" bpmnElement="F09"><di:waypoint x="1155" y="100" /><di:waypoint x="1277" y="100" /><bpmndi:BPMNLabel><dc:Bounds x="1160" y="82" width="25" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F10_di" bpmnElement="F10"><di:waypoint x="1130" y="125" /><di:waypoint x="1130" y="225" /><di:waypoint x="1295" y="225" /><di:waypoint x="1295" y="310" /><bpmndi:BPMNLabel><dc:Bounds x="1135" y="185" width="25" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F11_di" bpmnElement="F11"><di:waypoint x="1320" y="335" /><di:waypoint x="1395" y="335" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F12_di" bpmnElement="F12"><di:waypoint x="1525" y="335" /><di:waypoint x="1625" y="335" /><di:waypoint x="1625" y="625" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F13_di" bpmnElement="F13"><di:waypoint x="865" y="445" /><di:waypoint x="965" y="445" /><di:waypoint x="965" y="735" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F14_di" bpmnElement="F14"><di:waypoint x="1690" y="665" /><di:waypoint x="1765" y="665" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F15_di" bpmnElement="F15"><di:waypoint x="1815" y="665" /><di:waypoint x="1930" y="665" /><bpmndi:BPMNLabel><dc:Bounds x="1820" y="647" width="25" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F16_di" bpmnElement="F16"><di:waypoint x="1790" y="640" /><di:waypoint x="1790" y="555" /><di:waypoint x="1890" y="555" /><bpmndi:BPMNLabel><dc:Bounds x="1795" y="535" width="25" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F17_di" bpmnElement="F17"><di:waypoint x="2020" y="555" /><di:waypoint x="2102" y="555" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F18_di" bpmnElement="F18"><di:waypoint x="1030" y="775" /><di:waypoint x="1955" y="775" /><di:waypoint x="1955" y="690" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F19_di" bpmnElement="F19"><di:waypoint x="1980" y="665" /><di:waypoint x="2055" y="665" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F20_di" bpmnElement="F20"><di:waypoint x="2120" y="705" /><di:waypoint x="2120" y="930" /><di:waypoint x="2260" y="930" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F21_di" bpmnElement="F21"><di:waypoint x="2310" y="930" /><di:waypoint x="2385" y="930" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F22_di" bpmnElement="F22"><di:waypoint x="2515" y="930" /><di:waypoint x="2550" y="930" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F23_di" bpmnElement="F23"><di:waypoint x="2680" y="930" /><di:waypoint x="2780" y="930" /><di:waypoint x="2780" y="140" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F24_di" bpmnElement="F24"><di:waypoint x="2845" y="100" /><di:waypoint x="2920" y="100" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F25_di" bpmnElement="F25"><di:waypoint x="2970" y="100" /><di:waypoint x="3045" y="100" /><bpmndi:BPMNLabel><dc:Bounds x="2975" y="82" width="25" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F26_di" bpmnElement="F26"><di:waypoint x="3175" y="100" /><di:waypoint x="3257" y="100" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F27_di" bpmnElement="F27"><di:waypoint x="2945" y="75" /><di:waypoint x="2945" y="28" /><di:waypoint x="2285" y="28" /><di:waypoint x="2285" y="905" /><bpmndi:BPMNLabel><dc:Bounds x="2950" y="8" width="25" height="14" /></bpmndi:BPMNLabel></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F28_di" bpmnElement="F28"><di:waypoint x="2450" y="988" /><di:waypoint x="2450" y="1035" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="F29_di" bpmnElement="F29"><di:waypoint x="2385" y="1075" /><di:waypoint x="2285" y="1075" /><di:waypoint x="2285" y="955" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
