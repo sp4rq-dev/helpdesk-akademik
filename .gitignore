@@ -1,0 +1,26 @@
+# Systemowe / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Sekrety i konfiguracja lokalna
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+build/
+
+# Kopie zapasowe narzędzi do diagramów
+*.bkp
+*.drawio.bkp
+.$*.drawio
